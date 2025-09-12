@@ -30,7 +30,6 @@ class FormValidator {
     } else {
       this._hideInputError(inputElement);
     }
-    
   }
   _toggleButtonState() {
     if (this._formEl.checkValidity()) {
