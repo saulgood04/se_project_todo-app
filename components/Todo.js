@@ -32,11 +32,16 @@ class Todo {
     this._todoDeleteBtn = this._todoElement.querySelector(".todo__delete-btn");
 
     todoNameEl.textContent = this._data.name;
-    todoDate.textContent = `Due: ${this._data.date.toLocaleString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    })}`;
+    if (!isNaN(this._data.date)) {
+      todoDate.textContent = `Due: ${this._data.date.toLocaleString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      })}`;
+    } else {
+      todoDate.textContent = ""; // or whatever you want for invalid dates
+    }
+
     this._generateCheckboxEl();
     this._setEventListeners();
 
