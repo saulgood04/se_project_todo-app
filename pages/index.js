@@ -13,10 +13,12 @@ const addTodoCloseBtn = addTodoPopupEl.querySelector(".popup__close");
 
 const todosList = document.querySelector(".todos__list");
 
-const addTodoPopup = PopupWithForm({
-  popupSelector: "#add-toto-popup",
+const addTodoPopup = new PopupWithForm({
+  popupSelector: "#add-todo-popup",
   handleFormSubmit: () => {},
 });
+
+addTodoPopup.setEventListeners();
 
 const section = new Section({
   items: initialTodos,
@@ -45,9 +47,6 @@ addTodoButton.addEventListener("click", () => {
   addTodoPopup.open();
 });
 
-addTodoCloseBtn.addEventListener("click", () => {
-  closeModal(addTodoPopupEl);
-});
 
 addTodoForm.addEventListener("submit", (evt) => {
   evt.preventDefault();
