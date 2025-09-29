@@ -15,8 +15,23 @@ const todosList = document.querySelector(".todos__list");
 
 const addTodoPopup = new PopupWithForm({
   popupSelector: "#add-todo-popup",
-  handleFormSubmit: () => {},
-});
+  handleFormSubmit: (inputValues) => {
+    // todo - move code form existing submission handler to here
+    const name = inputValues.name;
+  const dateInput = inputValues.date;
+
+  // Create a date object and adjust for timezone
+  const date = new Date(dateInput);
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+
+  const id = uuidv4();
+  const values = { name, date, id };
+  section.addItem(generateTodo(values));
+  newTodoValidator.resetValidation();
+  addTodoPopup.close();
+  }
+  });
+
 
 addTodoPopup.setEventListeners();
 
@@ -48,21 +63,7 @@ addTodoButton.addEventListener("click", () => {
 });
 
 
-addTodoForm.addEventListener("submit", (evt) => {
-  evt.preventDefault();
-  const name = evt.target.name.value;
-  const dateInput = evt.target.date.value;
 
-  // Create a date object and adjust for timezone
-  const date = new Date(dateInput);
-  date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
-
-  const id = uuidv4();
-  const values = { name, date, id };
-  section.addItem(generateTodo(values));
-  newTodoValidator.resetValidation();
-  closeModal(addTodoPopupEl);
-});
 
 const newTodoValidator = new FormValidator(validationConfig, addTodoForm);
 newTodoValidator.enableValidation();
